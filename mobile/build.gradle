@@ -18,7 +18,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.google.android.gms:play-services-wearable:+'
-    compile 'com.squareup.okhttp:okhttp:1.6.0'
 }
 
 def repo = new File(rootDir, "repository")
