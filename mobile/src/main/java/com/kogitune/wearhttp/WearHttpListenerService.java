@@ -28,9 +28,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class WearHttpListenerService extends WearableListenerService {
 
-    private static final String TAG = "DataLayerSample";
-    private static final String START_ACTIVITY_PATH = "/http/get";
-    private static final String DATA_ITEM_RECEIVED_PATH = "/data-item-received";
+    private static final String TAG = "WearHttpListenerService";
     private GoogleApiClient mGoogleApiClient;
 
     @Override
@@ -52,7 +50,6 @@ public class WearHttpListenerService extends WearableListenerService {
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
         super.onMessageReceived(messageEvent);
-        Log.d(TAG, "onMessageReceived");
         ConnectionResult connectionResult =
                 mGoogleApiClient.blockingConnect(30, TimeUnit.SECONDS);
 

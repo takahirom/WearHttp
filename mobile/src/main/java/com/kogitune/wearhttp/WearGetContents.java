@@ -3,7 +3,6 @@ package com.kogitune.wearhttp;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -110,7 +109,6 @@ abstract class WearGetContents implements GoogleApiClient.OnConnectionFailedList
 
     @Override
     public void onDataChanged(DataEventBuffer dataEvents) {
-        Log.d(TAG, "onDataChanged nowKey" + mReqId);
         DataEvent event = dataEvents.get(0);
         mDataMap = DataMapItem.fromDataItem(event.getDataItem()).getDataMap();
         if (mDataMap.containsKey("reqId:" + mReqId)) {
@@ -128,7 +126,6 @@ abstract class WearGetContents implements GoogleApiClient.OnConnectionFailedList
             @Override
             public void onResult(MessageApi.SendMessageResult sendMessageResult) {
                 mReqId = sendMessageResult.getRequestId();
-                Log.d(TAG, "sendUrlToEachNode.onResult reqId:" + mReqId);
                 if (mDataMap == null) {
                     return;
                 }
