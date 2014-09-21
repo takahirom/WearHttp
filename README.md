@@ -1,6 +1,6 @@
 WearHttp
 ======
-This library provides an http contents getter.
+This library provides a means to access the content on the Web easily from AndroidWear.
 
 ## Example
 ### Code in AndroidWear app
