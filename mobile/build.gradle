@@ -29,7 +29,7 @@ uploadArchives {
     repositories {
         mavenDeployer {
             repository url: "file://${repo.absolutePath}"
-            pom.version = '0.0.1'
+            pom.version = '0.0.2'
             pom.groupId = 'com.kogitune'
             pom.artifactId = 'wear-http'
         }
