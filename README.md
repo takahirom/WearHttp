@@ -33,9 +33,6 @@ new WearGetImage(MainActivity.this).get("https://example.com/image.png",
 ### AndroidWear screen shot  
 ![image](https://cloud.githubusercontent.com/assets/1386930/4348768/7b2bb5f0-419a-11e4-946b-1587e970b6e9.png)  
 
-### Example Project
-[Example Project](https://github.com/takahirom/WearHttpSample)
-
 ## Usage  
 In Mobile and Wear module build.gradle:  
 **You must be implemented in both the Mobile and Wear**
@@ -51,6 +48,10 @@ dependencies {
 
 In wear module.  
 You implement it as in the [Example](#example)
+
+
+### Example Project
+[Example Project](https://github.com/takahirom/WearHttpSample)
 
 
 ## License
