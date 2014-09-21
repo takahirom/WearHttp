@@ -1,38 +1,40 @@
 package com.kogitune.wearhttp;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 /**
  * Created by takam on 2014/09/21.
  */
-public class WearGetTextContents extends WearGetContents {
+public class WearGetImage extends WearGet {
 
-    private WearGetContentsCallBack mCallBack;
+    private WearGetCallBack mCallBack;
 
-    public WearGetTextContents(Context context) {
+    public WearGetImage(Context context) {
         super(context);
     }
 
-    public interface WearGetContentsCallBack {
-        public void onGetContents(String contents);
+
+    public interface WearGetCallBack {
+        public void onGet(Bitmap contents);
 
         public void onFail(Exception e);
     }
 
-    public void getContents(final String url, final WearGetContentsCallBack callBack, final int timeOutSeconds) {
+
+    public void get(final String url, final WearGetCallBack callBack, final int timeOutSeconds) {
         mCallBack = callBack;
-        super.getContents(url, timeOutSeconds);
+        super.get(url, timeOutSeconds);
     }
+
 
     @Override
     void callSuccess(byte[] byteArray) {
         if (mCallBack == null) {
             return;
         }
-
-        mCallBack.onGetContents(new String(byteArray));
+        mCallBack.onGet(BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length));
         mCallBack = null;
     }
 
@@ -43,6 +45,7 @@ public class WearGetTextContents extends WearGetContents {
         }
         mCallBack.onFail(e);
         mCallBack = null;
+
     }
 
 }

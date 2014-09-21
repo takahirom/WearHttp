@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by takam on 2014/09/07.
  */
-abstract class WearGetContents implements GoogleApiClient.OnConnectionFailedListener, DataApi.DataListener {
+abstract class WearGet implements GoogleApiClient.OnConnectionFailedListener, DataApi.DataListener {
 
     int mReqId;
     private PendingResult<MessageApi.SendMessageResult> mPendingResult;
@@ -37,14 +37,14 @@ abstract class WearGetContents implements GoogleApiClient.OnConnectionFailedList
     private final GoogleApiClient mGoogleApiClient;
     public String TAG = getClass().getPackage().getName();
 
-    public WearGetContents(Context context) {
+    public WearGet(Context context) {
         mGoogleApiClient = new GoogleApiClient.Builder(context)
                 .addOnConnectionFailedListener(this)
                 .addApi(Wearable.API)
                 .build();
     }
 
-    public void getContents(final String url, final int timeOutSeconds) {
+    public void get(final String url, final int timeOutSeconds) {
         mInTimeCountDownLatch = new CountDownLatch(1);
 
         mGoogleApiClient.connect();
@@ -95,7 +95,7 @@ abstract class WearGetContents implements GoogleApiClient.OnConnectionFailedList
                     } else {
                         callSuccessOnUIThread();
                     }
-                    Wearable.DataApi.removeListener(mGoogleApiClient, WearGetContents.this);
+                    Wearable.DataApi.removeListener(mGoogleApiClient, WearGet.this);
                     mGoogleApiClient.disconnect();
                 } catch (InterruptedException e) {
                     e.printStackTrace();

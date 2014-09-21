@@ -33,8 +33,6 @@ class HttpByteArrayUtil {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
             int nRead;
-            // https://developer.android.com/reference/com/google/android/gms/wearable/DataItem.html#setData(byte[])
-            // The current maximum data item size limit is approximtely 100k. Data items should generally be much smaller than this limit.
             data = new byte[4];
 
             while ((nRead = is.read(data, 0, data.length)) != -1) {
