@@ -1,3 +1,6 @@
+# apk files
+*.apk
+
 # Crashlytics configuations
 com_crashlytics_export_strings.xml
 
