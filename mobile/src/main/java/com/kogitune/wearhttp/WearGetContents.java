@@ -1,9 +1,7 @@
 package com.kogitune.wearhttp;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
