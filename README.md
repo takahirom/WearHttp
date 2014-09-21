@@ -44,31 +44,7 @@ dependencies {
 }
 ```
 
-In wear module.  
-```java
-new WearGetText(MainActivity.this).get("http://example.com/text.txt", new WearGetText.WearGetCallBack() {
-    @Override
-    public void onGet(String contents) {
-        mTextView.setText(contents);
-    }
-
-    @Override
-    public void onFail(final Exception e) {
-        mTextView.setText(e.getMessage());
-    }
-});
-new WearGetImage(MainActivity.this).get("https://example.com/image.png", new WearGetImage.WearGetCallBack() {
-    @Override
-    public void onGet(Bitmap image) {
-        mImageView.setImageBitmap(image);
-    }
-
-    @Override
-    public void onFail(final Exception e) {
-        mTextView.setText(e.getMessage());
-    }
-});
-```
+In wear module. You implement it as in the [Example](#example)
 
 
 ## License
