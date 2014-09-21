@@ -5,7 +5,8 @@ This library provides an http contents getter.
 ## Example
 ### Code in AndroidWear app
 ```java
-new WearGetText(MainActivity.this).get("http://example.com/text.txt", new WearGetText.WearGetCallBack() {
+new WearGetText(MainActivity.this).get("http://example.com/text.txt", 
+  new WearGetText.WearGetCallBack() {
     @Override
     public void onGet(String contents) {
         mTextView.setText(contents);
@@ -16,7 +17,8 @@ new WearGetText(MainActivity.this).get("http://example.com/text.txt", new WearGe
         mTextView.setText(e.getMessage());
     }
 });
-new WearGetImage(MainActivity.this).get("https://example.com/image.png", new WearGetImage.WearGetCallBack() {
+new WearGetImage(MainActivity.this).get("https://example.com/image.png", 
+  new WearGetImage.WearGetCallBack() {
     @Override
     public void onGet(Bitmap image) {
         mImageView.setImageBitmap(image);
