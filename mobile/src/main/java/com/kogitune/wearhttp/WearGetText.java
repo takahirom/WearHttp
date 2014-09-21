@@ -19,8 +19,14 @@ public class WearGetText extends WearGet {
         public void onFail(Exception e);
     }
 
+    /**
+     * Get text contents.
+     *
+     * @param url      contents url
+     * @param callBack On get text called get.
+     */
     public void get(final String url, final WearGetCallBack callBack) {
-        get(url,callBack,10);
+        get(url, callBack, 10);
     }
 
     public void get(final String url, final WearGetCallBack callBack, final int timeOutSeconds) {

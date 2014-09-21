@@ -22,8 +22,14 @@ public class WearGetImage extends WearGet {
         public void onFail(Exception e);
     }
 
+    /**
+     * Get image contents.
+     *
+     * @param url      contents url
+     * @param callBack On get image called get.
+     */
     public void get(final String url, final WearGetCallBack callBack) {
-        get(url,callBack,10);
+        get(url, callBack, 10);
     }
 
     public void get(final String url, final WearGetCallBack callBack, final int timeOutSeconds) {
