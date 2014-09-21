@@ -1,13 +1,14 @@
 WearHttp
 ======
-This library provides an http contents getter.
+This library provides a means to access the content on the Web easily from AndroidWear.
 
 ## Example
-### code
+### Code in AndroidWear app
 ```java
-new WearGetTextContents(context).getContents("http://headers.jsontest.com/", new WearGetTextContents.WearGetContentsCallBack() {
+new WearGetText(MainActivity.this).get("http://example.com/text.txt", 
+  new WearGetText.WearGetCallBack() {
     @Override
-    public void onGetContents(String contents) {
+    public void onGet(String contents) {
         mTextView.setText(contents);
     }
 
@@ -15,23 +16,42 @@ new WearGetTextContents(context).getContents("http://headers.jsontest.com/", new
     public void onFail(final Exception e) {
         mTextView.setText(e.getMessage());
     }
-}, 10);
-new WearGetImageContents(context).getContents("https://cloud.githubusercontent.com/assets/1386930/4347967/65f420c4-4176-11e4-8cb6-d70f1867f8cb.png",
-    new WearGetImageContents.WearGetContentsCallBack() {
-        @Override
-        public void onGetContents(Bitmap image) {
-            mImageView.setImageBitmap(image);
-        }
+});
+new WearGetImage(MainActivity.this).get("https://example.com/image.png", 
+  new WearGetImage.WearGetCallBack() {
+    @Override
+    public void onGet(Bitmap image) {
+        mImageView.setImageBitmap(image);
+    }
 
-        @Override
-        public void onFail(final Exception e) {
-            mTextView.setText(e.getMessage());
-        }
-    }, 10);
+    @Override
+    public void onFail(final Exception e) {
+        mTextView.setText(e.getMessage());
+    }
+});
 ```
-### AndroidWear Screen  
+### AndroidWear screen shot  
 ![image](https://cloud.githubusercontent.com/assets/1386930/4348768/7b2bb5f0-419a-11e4-946b-1587e970b6e9.png)  
 
+## Usage  
+In Mobile and Wear module build.gradle:  
+**You must be implemented in both the Mobile and Wear**
+```groovy
+repositories {
+    maven { url 'http://raw.github.com/takahirom/WearHttp/master/repository/' }
+}
+dependencies {
+    ...
+    compile 'com.kogitune:wear-http:0.0.2'
+}
+```
+
+In wear module.  
+You implement it as in the [Example](#example)
+
+
+### Example Project
+[Example Project](https://github.com/takahirom/WearHttpSample)
 
 
 ## License
