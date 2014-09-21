@@ -19,6 +19,10 @@ public class WearGetText extends WearGet {
         public void onFail(Exception e);
     }
 
+    public void get(final String url, final WearGetCallBack callBack) {
+        get(url,callBack,10);
+    }
+
     public void get(final String url, final WearGetCallBack callBack, final int timeOutSeconds) {
         mCallBack = callBack;
         super.get(url, timeOutSeconds);
