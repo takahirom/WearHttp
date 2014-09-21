@@ -40,7 +40,7 @@ repositories {
 }
 dependencies {
     ...
-    compile 'com.kogitune:wear-http:0.0.+'
+    compile 'com.kogitune:wear-http:0.0.2'
 }
 ```
 
