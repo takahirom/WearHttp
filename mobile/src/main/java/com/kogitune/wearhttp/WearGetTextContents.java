@@ -26,48 +26,23 @@ public class WearGetTextContents extends WearGetContents {
         super.getContents(url, timeOutSeconds);
     }
 
-    void callSuccessOnUIThread() {
+    @Override
+    void callSuccess(byte[] byteArray) {
         if (mCallBack == null) {
             return;
         }
-        if (Looper.getMainLooper().equals(Looper.myLooper())) {
-            mCallBack.onGetContents(new String(mDataMap.getByteArray("reqId:" + mReqId)));
-            mCallBack = null;
-        } else {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
 
-                @Override
-                public void run() {
-                    if (mCallBack == null) {
-                        return;
-                    }
-                    mCallBack.onGetContents(new String(mDataMap.getByteArray("reqId:" + mReqId)));
-                    mCallBack = null;
-                }
-            });
-        }
+        mCallBack.onGetContents(new String(byteArray));
+        mCallBack = null;
     }
 
-    void callFailOnUIThread(final Exception e) {
+    @Override
+    void callFail(Exception e) {
         if (mCallBack == null) {
             return;
         }
-        if (Looper.getMainLooper().equals(Looper.myLooper())) {
-            mCallBack.onFail(e);
-            mCallBack = null;
-        } else {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-
-                @Override
-                public void run() {
-                    if (mCallBack == null) {
-                        return;
-                    }
-                    mCallBack.onFail(e);
-                    mCallBack = null;
-                }
-            });
-        }
+        mCallBack.onFail(e);
+        mCallBack = null;
     }
 
 }

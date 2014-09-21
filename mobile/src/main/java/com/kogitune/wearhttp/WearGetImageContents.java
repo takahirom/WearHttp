@@ -30,50 +30,24 @@ public class WearGetImageContents extends WearGetContents {
         super.getContents(url, timeOutSeconds);
     }
 
-    void callSuccessOnUIThread() {
+
+    @Override
+    void callSuccess(byte[] byteArray) {
         if (mCallBack == null) {
             return;
         }
-        if (Looper.getMainLooper().equals(Looper.myLooper())) {
-            byte[] byteArray = mDataMap.getByteArray("reqId:" + mReqId);
-            mCallBack.onGetContents(BitmapFactory.decodeByteArray(byteArray,0,byteArray.length));
-            mCallBack = null;
-        } else {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-
-                @Override
-                public void run() {
-                    if (mCallBack == null) {
-                        return;
-                    }
-                    byte[] byteArray = mDataMap.getByteArray("reqId:" + mReqId);
-                    mCallBack.onGetContents(BitmapFactory.decodeByteArray(byteArray,0,byteArray.length));
-                    mCallBack = null;
-                }
-            });
-        }
+        mCallBack.onGetContents(BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length));
+        mCallBack = null;
     }
 
-    void callFailOnUIThread(final Exception e) {
+    @Override
+    void callFail(Exception e) {
         if (mCallBack == null) {
             return;
         }
-        if (Looper.getMainLooper().equals(Looper.myLooper())) {
-            mCallBack.onFail(e);
-            mCallBack = null;
-        } else {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
+        mCallBack.onFail(e);
+        mCallBack = null;
 
-                @Override
-                public void run() {
-                    if (mCallBack == null) {
-                        return;
-                    }
-                    mCallBack.onFail(e);
-                    mCallBack = null;
-                }
-            });
-        }
     }
 
 }

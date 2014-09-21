@@ -2,6 +2,7 @@ package com.kogitune.wearhttp;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -95,6 +96,8 @@ abstract class WearGetContents implements GoogleApiClient.OnConnectionFailedList
                     } else {
                         callSuccessOnUIThread();
                     }
+                    Wearable.DataApi.removeListener(mGoogleApiClient, WearGetContents.this);
+                    mGoogleApiClient.disconnect();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -168,7 +171,37 @@ abstract class WearGetContents implements GoogleApiClient.OnConnectionFailedList
         return results;
     }
 
-    abstract void callSuccessOnUIThread();
+    void callSuccessOnUIThread() {
+        if (Looper.getMainLooper().equals(Looper.myLooper())) {
+            byte[] byteArray = mDataMap.getByteArray("reqId:" + mReqId);
+            callSuccess(byteArray);
+        } else {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
 
-    abstract void callFailOnUIThread(final Exception e);
+                @Override
+                public void run() {
+                    byte[] byteArray = mDataMap.getByteArray("reqId:" + mReqId);
+                    callSuccess(byteArray);
+                }
+            });
+        }
+    }
+
+    void callFailOnUIThread(final Exception e) {
+        if (Looper.getMainLooper().equals(Looper.myLooper())) {
+            callFail(e);
+        } else {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+
+                @Override
+                public void run() {
+                    callFail(e);
+                }
+            });
+        }
+    }
+
+    abstract void callSuccess(byte[] byteArray);
+
+    abstract void callFail(final Exception e);
 }
