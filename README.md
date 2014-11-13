@@ -2,6 +2,8 @@ WearHttp
 ======
 This library provides a means to access the content on the Web easily from AndroidWear.
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-WearHttp-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/976)
+
 ## Example
 ### Code in AndroidWear app
 ```java
