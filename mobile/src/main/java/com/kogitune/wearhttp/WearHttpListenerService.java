@@ -1,14 +1,12 @@
 package com.kogitune.wearhttp;
 
 import android.content.ComponentName;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.wearable.DataApi;
 import com.google.android.gms.wearable.DataMap;
@@ -29,6 +27,14 @@ import java.util.concurrent.TimeUnit;
 public class WearHttpListenerService extends WearableListenerService {
 
     private static final String TAG = "WearHttpListenerService";
+
+    public static final String MESSAGE_EVENT_PATH = "/http/get";
+
+    public static final String MESSAGE_EVENT_PATH_KEY = "MESSAGE_EVENT_PATH_KEY";
+    public static final String MESSAGE_EVENT_DATA_KEY = "MESSAGE_EVENT_DATA_KEY";
+    public static final String MESSAGE_EVENT_REQUEST_ID_KEY = "MESSAGE_EVENT_REQUEST_ID_KEY";
+    public static final String MESSAGE_EVENT_SOURCE_NODE_ID_KEY = "MESSAGE_EVENT_SOURCE_NODE_ID_KEY";
+
     private GoogleApiClient mGoogleApiClient;
 
     @Override
@@ -48,8 +54,44 @@ public class WearHttpListenerService extends WearableListenerService {
     }
 
     @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent == null) {
+            return START_NOT_STICKY;
+        }
+        if (!intent.hasExtra(MESSAGE_EVENT_PATH_KEY)) {
+            return START_NOT_STICKY;
+        }
+        handleEvent(intent.getStringExtra(MESSAGE_EVENT_PATH_KEY), intent.getByteArrayExtra(MESSAGE_EVENT_DATA_KEY), intent.getIntExtra(MESSAGE_EVENT_REQUEST_ID_KEY, 0), intent.getStringExtra(MESSAGE_EVENT_SOURCE_NODE_ID_KEY));
+        return START_NOT_STICKY;
+    }
+
+    @Override
     public void onMessageReceived(MessageEvent messageEvent) {
         super.onMessageReceived(messageEvent);
+        final Intent intent = new Intent();
+        intent.setPackage(getPackageName());
+        intent.putExtra(MESSAGE_EVENT_PATH_KEY, messageEvent.getPath());
+        intent.putExtra(MESSAGE_EVENT_DATA_KEY, messageEvent.getData());
+        intent.putExtra(MESSAGE_EVENT_REQUEST_ID_KEY, messageEvent.getRequestId());
+        intent.putExtra(MESSAGE_EVENT_SOURCE_NODE_ID_KEY, messageEvent.getSourceNodeId());
+        sendBroadcast(intent);
+    }
+
+    private void handleEvent(final String path, final byte[] data, final int requestId, final String sourceNodeId) {
+        if (!MESSAGE_EVENT_PATH.equals(path)) {
+            return;
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                sendResponse(data, requestId);
+            }
+        }).start();
+
+    }
+
+    private void sendResponse(byte[] data, int requestId) {
+
         ConnectionResult connectionResult =
                 mGoogleApiClient.blockingConnect(30, TimeUnit.SECONDS);
 
@@ -59,7 +101,7 @@ public class WearHttpListenerService extends WearableListenerService {
         }
         URL url = null;
         try {
-            url = new URL(new String(messageEvent.getData()));
+            url = new URL(new String(data));
         } catch (MalformedURLException e) {
             e.printStackTrace();
             return;
@@ -73,7 +115,7 @@ public class WearHttpListenerService extends WearableListenerService {
 
         // set data
         dataMap.putLong("time", new Date().getTime());
-        dataMap.putByteArray("reqId:" + messageEvent.getRequestId(), byteArray);
+        dataMap.putByteArray("reqId:" + requestId, byteArray);
 
         // refresh data
         final PutDataRequest request = dataMapRequest.asPutDataRequest();

@@ -3,13 +3,12 @@ apply plugin: 'android-library'
 android {
     compileSdkVersion 20
     buildToolsVersion "20.0.0"
-
-    defaultConfig {
-        applicationId "com.kogitune.wearhttp"
+    defaultConfig{
+        minSdkVersion 4
     }
+
     buildTypes {
         release {
-            runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -28,7 +27,7 @@ uploadArchives {
     repositories {
         mavenDeployer {
             repository url: "file://${repo.absolutePath}"
-            pom.version = '0.0.2'
+            pom.version = '0.0.3'
             pom.groupId = 'com.kogitune'
             pom.artifactId = 'wear-http'
         }

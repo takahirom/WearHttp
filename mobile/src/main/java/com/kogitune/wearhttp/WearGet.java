@@ -121,7 +121,7 @@ abstract class WearGet implements GoogleApiClient.OnConnectionFailedListener, Da
 
         String node = nodes.iterator().next();
         mPendingResult = Wearable.MessageApi
-                .sendMessage(mGoogleApiClient, node, "/http/get", url.getBytes());
+                .sendMessage(mGoogleApiClient, node, WearHttpListenerService.MESSAGE_EVENT_PATH, url.getBytes());
         mPendingResult.setResultCallback(new ResultCallback<MessageApi.SendMessageResult>() {
             @Override
             public void onResult(MessageApi.SendMessageResult sendMessageResult) {
