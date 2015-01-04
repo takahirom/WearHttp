@@ -8,6 +8,12 @@
   <packaging>aar</packaging>
   <dependencies>
     <dependency>
+      <groupId>com.kogitune</groupId>
+      <artifactId>wearable-listener-service-broadcaster</artifactId>
+      <version>0.0.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>com.google.android.gms</groupId>
       <artifactId>play-services-wearable</artifactId>
       <version>+</version>

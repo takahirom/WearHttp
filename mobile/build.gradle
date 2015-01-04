@@ -1,5 +1,9 @@
-repositories {
-    maven { url 'http://raw.github.com/takahirom/WearableListenerServiceBroadcaster/master/repository/' }
+rootProject.allprojects {
+    it.repositories {
+        maven {
+            url 'http://raw.github.com/takahirom/WearableListenerServiceBroadcaster/master/repository/'
+        }
+    }
 }
 apply plugin: 'android-library'
 

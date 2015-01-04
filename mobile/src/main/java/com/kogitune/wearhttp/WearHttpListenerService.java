@@ -65,18 +65,6 @@ public class WearHttpListenerService extends WearableListenerService {
         return START_NOT_STICKY;
     }
 
-    @Override
-    public void onMessageReceived(MessageEvent messageEvent) {
-        super.onMessageReceived(messageEvent);
-        final Intent intent = new Intent();
-        intent.setPackage(getPackageName());
-        intent.putExtra(MESSAGE_EVENT_PATH_KEY, messageEvent.getPath());
-        intent.putExtra(MESSAGE_EVENT_DATA_KEY, messageEvent.getData());
-        intent.putExtra(MESSAGE_EVENT_REQUEST_ID_KEY, messageEvent.getRequestId());
-        intent.putExtra(MESSAGE_EVENT_SOURCE_NODE_ID_KEY, messageEvent.getSourceNodeId());
-        sendBroadcast(intent);
-    }
-
     private void handleEvent(final String path, final byte[] data, final int requestId, final String sourceNodeId) {
         if (!MESSAGE_EVENT_PATH.equals(path)) {
             return;
