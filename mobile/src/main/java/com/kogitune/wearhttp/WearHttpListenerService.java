@@ -1,5 +1,6 @@
 package com.kogitune.wearhttp;
 
+import android.app.IntentService;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by takam on 2014/09/07.
  */
-public class WearHttpListenerService extends WearableListenerService {
+public class WearHttpListenerService extends IntentService {
 
     private static final String TAG = "WearHttpListenerService";
 
@@ -54,15 +55,8 @@ public class WearHttpListenerService extends WearableListenerService {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent == null) {
-            return START_NOT_STICKY;
-        }
-        if (!intent.hasExtra(MESSAGE_EVENT_PATH_KEY)) {
-            return START_NOT_STICKY;
-        }
+    protected void onHandleIntent(Intent intent) {
         handleEvent(intent.getStringExtra(MESSAGE_EVENT_PATH_KEY), intent.getByteArrayExtra(MESSAGE_EVENT_DATA_KEY), intent.getIntExtra(MESSAGE_EVENT_REQUEST_ID_KEY, 0), intent.getStringExtra(MESSAGE_EVENT_SOURCE_NODE_ID_KEY));
-        return START_NOT_STICKY;
     }
 
     private void handleEvent(final String path, final byte[] data, final int requestId, final String sourceNodeId) {
