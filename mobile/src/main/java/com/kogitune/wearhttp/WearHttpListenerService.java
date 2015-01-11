@@ -16,6 +16,7 @@ import com.google.android.gms.wearable.PutDataMapRequest;
 import com.google.android.gms.wearable.PutDataRequest;
 import com.google.android.gms.wearable.Wearable;
 import com.google.android.gms.wearable.WearableListenerService;
+import com.kogitune.wearablelistenerservicebroadcaster.WearListenerService;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -37,6 +38,10 @@ public class WearHttpListenerService extends IntentService {
     public static final String MESSAGE_EVENT_SOURCE_NODE_ID_KEY = "MESSAGE_EVENT_SOURCE_NODE_ID_KEY";
 
     private GoogleApiClient mGoogleApiClient;
+
+    public WearHttpListenerService(){
+        super("WearHttpListenerService");
+    }
 
     @Override
     public void onCreate() {
