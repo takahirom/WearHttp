@@ -10,7 +10,6 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/wear" />
             <option value="$PROJECT_DIR$/wear-http" />
-            <option value="$PROJECT_DIR$/wear-shared-preferences" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -26,7 +26,7 @@ public class WearGetText extends WearGet {
      * @param callBack On get text called get.
      */
     public void get(final String url, final WearGetCallBack callBack) {
-        get(url, callBack, 10);
+        get(url, callBack, 60);
     }
 
     public void get(final String url, final WearGetCallBack callBack, final int timeOutSeconds) {
