@@ -1,0 +1,92 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
+        classpath 'com.github.dcendents:android-maven-plugin:1.2'
+    }
+}
+
+repositories {
+    jcenter()
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.0.2"
+    defaultConfig{
+        minSdkVersion 4
+    }
+
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.google.android.gms:play-services-wearable:+'
+    //compile 'com.kogitune:wearable-listener-service-broadcaster:0.0.1'
+    compile 'com.kogitune:library:0.0.1'
+}
+
+
+group = 'com.kogitune'
+version = '0.0.3'
+
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+
+def siteUrl = 'https://github.com/takahirom/WearHttp'
+def gitUrl = 'https://github.com/takahirom/WearHttp.git'
+bintray {
+    user = "takahirom"
+    if (file("key").exists()) {
+        key = file("key").text
+    }
+
+    configurations = ['archives'] //When uploading configuration files
+    publish = true
+    pkg {
+        repo = 'maven'
+        name = 'WearHttp'
+        desc = 'This library provides a means to access the content on the Web easily from AndroidWear. Welcome pull request'
+        websiteUrl = siteUrl
+        issueTrackerUrl = 'https://github.com/takahirom/WearHttp/issues'
+        vcsUrl = gitUrl
+        licenses = ['Apache-2.0']
+        labels = ['aar', 'android', 'wear', 'Http', 'NetWork']
+        publicDownloadNumbers = true
+    }
+}
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
