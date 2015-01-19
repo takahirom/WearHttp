@@ -9,6 +9,7 @@ import android.util.Log;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.wearable.Asset;
 import com.google.android.gms.wearable.DataApi;
 import com.google.android.gms.wearable.DataMap;
 import com.google.android.gms.wearable.MessageEvent;
@@ -102,7 +103,9 @@ public class WearHttpListenerService extends IntentService {
 
         // set data
         dataMap.putLong("time", new Date().getTime());
-        dataMap.putByteArray("reqId:" + requestId, byteArray);
+
+        dataMap.putAsset("reqId:" + requestId, Asset.createFromBytes(byteArray));
+
 
         // refresh data
         final PutDataRequest request = dataMapRequest.asPutDataRequest();

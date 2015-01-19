@@ -8,6 +8,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.wearable.Asset;
 import com.google.android.gms.wearable.DataApi;
 import com.google.android.gms.wearable.DataEvent;
 import com.google.android.gms.wearable.DataEventBuffer;
@@ -18,10 +19,13 @@ import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.zip.DataFormatException;
 
 /**
  * Created by takam on 2014/09/07.
@@ -169,16 +173,48 @@ abstract class WearGet implements GoogleApiClient.OnConnectionFailedListener, Da
     }
 
     void callSuccessOnUIThread() {
+        final Asset asset = mDataMap.getAsset("reqId:" + mReqId);
+        PendingResult<DataApi.GetFdForAssetResult> pendingResult = Wearable.DataApi.getFdForAsset(mGoogleApiClient, asset);
+        DataApi.GetFdForAssetResult assetResult = pendingResult.await();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+        int nRead;
+        byte[] data = new byte[16384];
+
+        try {
+            while ((nRead = assetResult.getInputStream().read(data, 0, data.length)) != -1) {
+                buffer.write(data, 0, nRead);
+            }
+
+            buffer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+            callFailOnUIThread(e);
+            return;
+        }
+
+        final byte[] byteArray = buffer.toByteArray();
+
         if (Looper.getMainLooper().equals(Looper.myLooper())) {
-            byte[] byteArray = mDataMap.getByteArray("reqId:" + mReqId);
-            callSuccess(byteArray);
+            try {
+                callSuccess(CompressionUtils.decompress(byteArray));
+            } catch (IOException e) {
+                callFailOnUIThread(e);
+            } catch (DataFormatException e) {
+                callFailOnUIThread(e);
+            }
         } else {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
 
                 @Override
                 public void run() {
-                    byte[] byteArray = mDataMap.getByteArray("reqId:" + mReqId);
-                    callSuccess(byteArray);
+                    try {
+                        callSuccess(CompressionUtils.decompress(byteArray));
+                    } catch (IOException e) {
+                        callFailOnUIThread(e);
+                    } catch (DataFormatException e) {
+                        callFailOnUIThread(e);
+                    }
                 }
             });
         }
