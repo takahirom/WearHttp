@@ -40,7 +40,7 @@ dependencies {
 
 
 group = 'com.kogitune'
-version = '0.0.3'
+version = '0.0.4'
 
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
