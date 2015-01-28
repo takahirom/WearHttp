@@ -39,12 +39,9 @@ new WearGetImage(MainActivity.this).get("https://example.com/image.png",
 In Mobile and Wear module build.gradle:  
 **You must be implemented in both the Mobile and Wear**
 ```groovy
-repositories {
-    maven { url 'http://raw.github.com/takahirom/WearHttp/master/repository/' }
-}
 dependencies {
     ...
-    compile 'com.kogitune:wear-http:0.0.2'
+    compile 'com.kogitune:wear-http:0.0.4'
 }
 ```
 
