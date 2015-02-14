@@ -12,7 +12,7 @@ public class WearListenerReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (BuildConfig.DEBUG) {
-            Log.d("WearHttp/WearListenerReceiver", "onReceive");
+            Log.d("WearListenerReceiver", "onReceive");
         }
         final Context applicationContext = context.getApplicationContext();
         intent.setClass(applicationContext, WearHttpListenerService.class);

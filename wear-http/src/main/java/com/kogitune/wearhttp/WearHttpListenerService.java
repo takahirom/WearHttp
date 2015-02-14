@@ -114,8 +114,10 @@ public class WearHttpListenerService extends IntentService {
                 .setResultCallback(new ResultCallback<DataApi.DataItemResult>() {
                     @Override
                     public void onResult(DataApi.DataItemResult dataItemResult) {
-                        Log.d(TAG, "putDataItem status: "
-                                + dataItemResult.getStatus().toString());
+                        if(BuildConfig.DEBUG) {
+                            Log.d(TAG, "putDataItem status: "
+                                    + dataItemResult.getStatus().toString());
+                        }
                     }
                 });
     }

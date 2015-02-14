@@ -1,7 +1,5 @@
 package com.kogitune.wearhttp;
 
-import android.util.Log;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +8,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletionService;
 
 /**
  * Created by takam on 2014/09/15.

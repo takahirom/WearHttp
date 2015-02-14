@@ -39,7 +39,7 @@ abstract class WearGet implements GoogleApiClient.OnConnectionFailedListener, Da
 
 
     private final GoogleApiClient mGoogleApiClient;
-    public String TAG = getClass().getPackage().getName();
+    public static final String TAG = WearGet.class.getPackage().getName();
 
     public WearGet(Context context) {
         mGoogleApiClient = new GoogleApiClient.Builder(context)
