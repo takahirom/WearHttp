@@ -34,13 +34,12 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.google.android.gms:play-services-wearable:+'
-    //compile 'com.kogitune:wearable-listener-service-broadcaster:0.0.1'
-    compile 'com.kogitune:library:0.0.1'
+    compile 'com.kogitune:wear-listener-service-broadcaster:0.0.3'
 }
 
 
 group = 'com.kogitune'
-version = '0.0.4'
+version = '0.0.5'
 
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
@@ -48,6 +47,15 @@ apply plugin: 'maven-publish'
 
 def siteUrl = 'https://github.com/takahirom/WearHttp'
 def gitUrl = 'https://github.com/takahirom/WearHttp.git'
+
+android.libraryVariants
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifact bundleRelease
+        }
+    }
+}
 bintray {
     user = "takahirom"
     if (file("key").exists()) {
@@ -71,6 +79,7 @@ bintray {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
+
 
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs

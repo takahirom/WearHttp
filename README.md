@@ -41,7 +41,7 @@ In Mobile and Wear module build.gradle:
 ```groovy
 dependencies {
     ...
-    compile 'com.kogitune:wear-http:0.0.4'
+    compile 'com.kogitune:wear-http:0.0.5'
 }
 ```
 
