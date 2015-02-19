@@ -52,6 +52,11 @@ You implement it as in the [Example](#example)
 ### Example Project
 [Example Project](https://github.com/takahirom/WearHttpSample)
 
+## Suggestion
+
+WearHttp can use in [WearSharedPreferences](https://github.com/takahirom/WearSharedPreferences) and simultaneous.
+
+
 
 ## License
 
