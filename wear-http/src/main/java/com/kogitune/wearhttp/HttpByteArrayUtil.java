@@ -26,10 +26,8 @@ class HttpByteArrayUtil {
         InputStream is = null;
         try {
             connection = (HttpURLConnection) url.openConnection();
-            Map<String, List<String>> map = connection.getHeaderFields();
 
             is = connection.getInputStream();
-            InputStreamReader isr = new InputStreamReader(is);
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
             int nRead;
