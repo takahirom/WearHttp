@@ -1,5 +1,7 @@
 package com.kogitune.wearhttp;
 
+import com.kogitune.wearablelistenerservicebroadcaster.*;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,13 +42,17 @@ class HttpByteArrayUtil {
             data = CompressionUtils.compress(data);
             buffer.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace();
+            }
         } finally {
             if (is != null) {
                 try {
                     is.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    if (BuildConfig.DEBUG) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
