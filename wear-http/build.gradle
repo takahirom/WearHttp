@@ -33,8 +33,8 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.google.android.gms:play-services-wearable:+'
-    compile 'com.kogitune:wear-listener-service-broadcaster:+'
+    compile 'com.google.android.gms:play-services-wearable:8.1.0'
+    compile 'com.kogitune:wear-listener-service-broadcaster:0.0.4'
 }
 
 

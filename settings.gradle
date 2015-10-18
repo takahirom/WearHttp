@@ -1,2 +1,2 @@
-include ':wear', ':wear-http'
+include ':wear-http'
 include ':mobilesample', ':wearsample'
