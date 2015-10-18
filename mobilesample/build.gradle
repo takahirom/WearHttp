@@ -1,0 +1,36 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "com.kogitune.wearhttpsample"
+        minSdkVersion 18
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    wearApp project(':wearsample')
+    compile 'com.android.support:appcompat-v7:21.0.+'
+    compile 'com.google.android.gms:play-services-wearable:+'
+    compile 'com.kogitune:wear-http:0.0.6'
+
+    // If you want to use com.google.android.gms:play-services exclude
+//    compile 'com.google.android.gms:play-services:+'
+//    compile ('com.kogitune:wear-http:0.0.5'){
+//        exclude group: 'com.google.android.gms'
+//    }
+
+    compile project(":wear-http")
+}
