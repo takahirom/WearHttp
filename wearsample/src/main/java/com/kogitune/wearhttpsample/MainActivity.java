@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.wearable.view.WatchViewStub;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,9 +25,18 @@ public class MainActivity extends Activity {
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
-                mTextView = (TextView) stub.findViewById(R.id.text);
-                mImageView = (ImageView) stub.findViewById(R.id.image);
+                onInflate(stub);
+            }
+        });
+    }
 
+    private void onInflate(WatchViewStub stub) {
+        mTextView = (TextView) stub.findViewById(R.id.text);
+        mImageView = (ImageView) stub.findViewById(R.id.image);
+
+        stub.findViewById(R.id.button_retry).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 mTextView.setText("start");
                 new WearGetText(MainActivity.this).get("http://headers.jsontest.com/", new WearGetText.WearGetCallBack() {
                     @Override
@@ -52,9 +62,8 @@ public class MainActivity extends Activity {
                             }
                         }
                 );
-
-
             }
         });
+
     }
 }
