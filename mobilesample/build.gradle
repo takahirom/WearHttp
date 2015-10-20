@@ -24,7 +24,7 @@ dependencies {
     wearApp project(':wearsample')
     compile 'com.android.support:appcompat-v7:21.0.+'
     compile 'com.google.android.gms:play-services-wearable:+'
-    compile 'com.kogitune:wear-http:0.0.6'
+//    compile 'com.kogitune:wear-http:0.0.6'
 
     // If you want to use com.google.android.gms:play-services exclude
 //    compile 'com.google.android.gms:play-services:+'
