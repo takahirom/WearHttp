@@ -123,22 +123,23 @@ abstract class WearGet implements GoogleApiClient.OnConnectionFailedListener, Da
     private void sendUrlToEachNode(String url, Collection<String> nodes) {
         mPendingResult = null;
 
-        String node = nodes.iterator().next();
-        mPendingResult = Wearable.MessageApi
-                .sendMessage(mGoogleApiClient, node, WearHttpListenerService.MESSAGE_EVENT_PATH, url.getBytes());
-        mPendingResult.setResultCallback(new ResultCallback<MessageApi.SendMessageResult>() {
-            @Override
-            public void onResult(MessageApi.SendMessageResult sendMessageResult) {
-                mReqId = sendMessageResult.getRequestId();
-                if (mDataMap == null) {
-                    return;
-                }
+        for (String node : nodes) {
+            mPendingResult = Wearable.MessageApi
+                    .sendMessage(mGoogleApiClient, node, WearHttpListenerService.MESSAGE_EVENT_PATH, url.getBytes());
+            mPendingResult.setResultCallback(new ResultCallback<MessageApi.SendMessageResult>() {
+                @Override
+                public void onResult(MessageApi.SendMessageResult sendMessageResult) {
+                    mReqId = sendMessageResult.getRequestId();
+                    if (mDataMap == null) {
+                        return;
+                    }
 
-                if (mDataMap.containsKey("reqId:" + mReqId)) {
-                    mInTimeCountDownLatch.countDown();
+                    if (mDataMap.containsKey("reqId:" + mReqId)) {
+                        mInTimeCountDownLatch.countDown();
+                    }
                 }
-            }
-        });
+            });
+        }
 
     }
 
