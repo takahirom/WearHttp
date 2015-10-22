@@ -45,12 +45,11 @@ dependencies {
 }
 ```
 
-In wear module.  
-You implement it as in the [Example](#example)
-
 
 ### Example Project
-[Example Project](https://github.com/takahirom/WearHttpSample)
+Directory
+* mobilesample
+* wearsample
 
 ## Suggestion
 
